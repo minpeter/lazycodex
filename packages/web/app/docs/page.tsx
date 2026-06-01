@@ -1,14 +1,15 @@
+import type { Metadata } from "next";
+import { DocsShell } from "@/components/docs/docs-shell";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SiteHeader } from "@/components/site/site-header";
 import { DOC_SECTIONS } from "@/lib/docs-sections";
 import { loadDocSource } from "@/lib/docs-source";
-import { SiteHeader } from "@/components/site/site-header";
-import { SiteFooter } from "@/components/site/site-footer";
-import { DocsShell } from "@/components/docs/docs-shell";
-import type { Metadata } from "next";
 import "@/app/styles/docs.css";
 
 export const metadata: Metadata = {
   title: "Documentation",
-  description: "LazyCodex documentation — install, ultrawork mode, $ulw-loop, $ulw-plan, $start-work.",
+  description:
+    "LazyCodex documentation — install, game-development workflows, skills, ultrawork mode, $ulw-loop, $ulw-plan, $start-work.",
   alternates: {
     canonical: "/docs",
   },
@@ -27,7 +28,7 @@ export default function DocsPage() {
         <div className="docs-hero">
           <h1 className="docs-hero-title">Documentation</h1>
           <p className="docs-hero-tagline">
-            Learn how to install, configure, and use LazyCodex for ultrawork.
+            Learn how to install, configure, and use LazyCodex for ultrawork and skill-first workflows.
           </p>
         </div>
         <DocsShell sections={sections}>

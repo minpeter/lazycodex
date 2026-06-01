@@ -38,7 +38,7 @@ describe("lazycodex-ai npm package", () => {
     assert.equal(result.status, 0, result.stderr)
     assert.equal(
       result.stdout.trim(),
-      "bunx --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous",
+      "npx --yes --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous",
     )
   })
 
@@ -54,6 +54,6 @@ describe("lazycodex-ai npm package", () => {
 
     // then
     assert.equal(result.status, 0, result.stderr)
-    assert.equal(result.stdout.trim(), "bunx --package oh-my-openagent omo doctor")
+    assert.equal(result.stdout.trim(), "npx --yes --package oh-my-openagent omo doctor")
   })
 })

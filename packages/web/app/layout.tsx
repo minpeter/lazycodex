@@ -7,7 +7,7 @@ const SITE_URL = "https://lazycodex.ai"
 const SITE_NAME = "LazyCodex"
 const TAGLINE = "Codex for no-brainers"
 const DESCRIPTION =
-  "LazyCodex. You don't need to think. Just prompt with ultrawork. Coming June 2026. Currently on OpenCode."
+  "LazyCodex. You don't need to ultrathink. Just prompt with ultrawork and install the Codex agent harness in one command."
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -19,7 +19,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — ${TAGLINE}. Coming June 2026.`,
+    default: `${SITE_NAME} — ${TAGLINE}`,
     template: `%s | ${SITE_NAME}`,
   },
   description: DESCRIPTION,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — ${TAGLINE}. Coming June 2026.`,
+    title: `${SITE_NAME} — ${TAGLINE}`,
     description: DESCRIPTION,
     // og:image supplied by app/opengraph-image.tsx (file-based convention).
   },
@@ -93,8 +93,7 @@ const jsonLd = {
     "@type": "Offer",
     price: "0",
     priceCurrency: "USD",
-    availability: "https://schema.org/PreOrder",
-    availabilityStarts: "2026-06-01",
+    availability: "https://schema.org/InStock",
   },
   potentialAction: {
     "@type": "ViewAction",

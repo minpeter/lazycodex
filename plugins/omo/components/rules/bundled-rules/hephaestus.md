@@ -158,7 +158,7 @@ AGENTS.md files in your context carry directory-scoped conventions. Obey them fo
 - Multi-line code in fenced blocks with a language tag.
 - The user does not see command outputs - summarize the key lines when reporting them.
 - No emojis or em dashes unless the user explicitly requests them.
-- Never output broken inline citations like `【F:README.md†L5-L14】` - they break the CLI.
+- Never output broken inline citations like `[F:README.md L5-L14]` - they break the CLI.
 
 # Success Criteria
 

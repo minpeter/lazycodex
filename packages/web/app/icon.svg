@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="LazyCodex boulder favicon">
+  <title>LazyCodex boulder favicon</title>
+  <rect width="256" height="256" rx="52" fill="#14154d"/>
+  <path
+    d="M55 153C41 99 88 38 145 40c53 2 89 45 82 98-7 53-55 82-103 74-38-6-58-24-69-59Z"
+    fill="#2a2dbf"
+    stroke="#87f0f2"
+    stroke-width="14"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M95 115l35 27-32 35M150 178h42"
+    fill="none"
+    stroke="#87f0f2"
+    stroke-width="16"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M69 82c34-29 95-33 126 7"
+    fill="none"
+    stroke="#b3feff"
+    stroke-width="8"
+    stroke-linecap="round"
+    opacity=".45"
+  />
+</svg>

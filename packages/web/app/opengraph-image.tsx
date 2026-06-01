@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 
 export const runtime = "nodejs"
-export const alt = "LazyCodex splash — Codex for no-brainers. Coming June 2026."
+export const alt = "LazyCodex splash — Codex for no-brainers."
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -82,7 +82,7 @@ export default function OgImage(): ImageResponse {
               lineHeight: 1.35,
             }}
           >
-            <div>You don't need to think.</div>
+            <div>You don't need to ultrathink.</div>
             <div style={{ display: "flex" }}>
               <span>Just prompt with&nbsp;</span>
               <span style={{ color: palette.textPrimary, fontWeight: 500 }}>ultrawork</span>

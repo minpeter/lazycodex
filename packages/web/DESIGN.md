@@ -26,7 +26,7 @@
 ## 4. Layout & Spacing
 - **Canvas**: Full viewport (`min-h-[100dvh]`), flex column, centered.
 - **Card**: Max width 1200px, aspect ratio 1200/630 on large screens. Rounded corners (`16px`).
-- **Outer Elements**: "OmO in Codex" (top-left) and "Coming June 2026" (bottom-right) are positioned absolutely on the canvas, outside the card, to preserve the card's exact visual match with the reference.
+- **Outer Elements**: The canvas may carry small co-brand labels outside the card when needed, but the current public landing page leads with installable Codex setup instead of launch timing.
 
 ## 5. Gradients & Effects
 - **Base Gradient**: Radial gradient from `#5a5fef` to `#232897`.
@@ -70,9 +70,9 @@ The landing page is a single scrollable document with the following sections, to
    - The `{your prompt}` placeholder uses Geist Mono and pulses subtly
 
 3. **Install block**
-   - Copyable bash snippet: `bunx lazycodex-ai install`
-   - One-line note: "No global install. Always `bunx`."
-   - Secondary line for the autonomous variant: `bunx lazycodex-ai install --no-tui --codex-autonomous`
+   - Copyable bash snippet: `npx lazycodex-ai install`
+   - One-line note: "No global install. Always `npx`."
+   - Secondary line for the autonomous variant: `npx lazycodex-ai install --no-tui --codex-autonomous`
 
 4. **Three command cards**
    - `$ulw-loop` — self-referential loop
@@ -80,15 +80,21 @@ The landing page is a single scrollable document with the following sections, to
    - `$start-work` — plan executor
    - Each card has a monospace command header, a one-line description, and a syntax example
 
-5. **Ultrawork explainer**
+5. **Game development + skills guide**
+   - The existing three command cards remain the main pillars and appear before this guide
+   - Adds "Build games with LazyCodex" positioning for large repos with gameplay, tools, data, launchers, editors, and build pipelines
+   - Calls out `/init-deep` as the map for messy project structure
+   - Lists skill-first workflows such as `review-work`, `remove-ai-slops`, `frontend-ui-ux`, `programming`, LSP, AST-grep, rules, and comment-checker
+
+6. **Ultrawork explainer**
    - Short paragraph on what `ultrawork` means (OmO discipline mode, parallel agents, auto-verification)
    - Link to the docs deep-dive
 
-6. **Docs CTA**
+7. **Docs CTA**
    - Large button: "Read the docs"
    - Secondary link: "View on GitHub"
 
-7. **Footer**
+8. **Footer**
    - Sisyphus Labs co-brand strip (night + panel colors)
    - Links: GitHub, OmO, sisyphuslabs.ai
    - MIT license note
@@ -109,6 +115,6 @@ The landing page is a single scrollable document with the following sections, to
 - **Boulder art**: Generated via `imagegen` on a chroma background, keyed to alpha so it composites cleanly on the navy canvas without a visible bounding box
 - **Delivery format**: Served as AVIF / WebP / PNG via a `<picture>` element using the `BrandImage` component
 - **Dimensions**: Explicit `width` and `height` attributes on every image to prevent CLS
-- **Favicon / app-icon**: The rock boulder is reused as the site favicon and Apple touch icon:
-  - `app/icon.png`
-  - `app/apple-icon.png`
+- **Favicon / app-icon**: The simplified boulder mark from the sticky header is the canonical site icon so browser chrome, pinned tabs, and the in-page wordmark read as one identity:
+  - `app/icon.svg` for the scalable browser favicon
+  - `app/apple-icon.png` at 180x180 for Apple touch surfaces, generated from the same mark

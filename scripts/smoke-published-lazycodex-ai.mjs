@@ -45,17 +45,17 @@ function runSmoke({ label, command, args, expectedStdout }) {
 
 try {
   runSmoke({
-    label: "bunx install dry-run",
-    command: "bunx",
+    label: "npx install dry-run",
+    command: "npx",
     args: [packageSpec, "--dry-run", "install", "--no-tui", "--codex-autonomous"],
-    expectedStdout: "bunx --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous",
+    expectedStdout: "npx --yes --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous",
   })
 
   runSmoke({
     label: "npx doctor dry-run",
     command: "npx",
     args: ["-y", packageSpec, "--dry-run", "doctor"],
-    expectedStdout: "bunx --package oh-my-openagent omo doctor",
+    expectedStdout: "npx --yes --package oh-my-openagent omo doctor",
   })
 } finally {
   rmSync(tempDir, { recursive: true, force: true })

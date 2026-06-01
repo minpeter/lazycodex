@@ -138,8 +138,8 @@ For Bun projects, add to `compilerOptions`:
 ## CI gate
 
 ```bash
-bunx biome check .
-bunx tsc --noEmit
+npx biome check .
+npx tsc --noEmit
 bun test
 ```
 

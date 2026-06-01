@@ -1,17 +1,38 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
-test.describe("coming-soon page — SEO + metadata", () => {
+const LAUNCH_GATING_PATTERN = new RegExp(
+  [
+    ["coming", "soon"],
+    ["coming", "june"],
+    ["currently", "available", "for", "opencode"],
+  ]
+    .map((parts) => parts.join("\\s+"))
+    .join("|"),
+  "i",
+)
+
+function readPngDimensions(buffer: Buffer): { width: number; height: number } {
+  const pngSignature = "89504e470d0a1a0a"
+  expect(buffer.subarray(0, 8).toString("hex")).toBe(pngSignature)
+
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20),
+  }
+}
+
+test.describe("site SEO + metadata", () => {
   test("has a unique <title>, description, canonical, lang, viewport", async ({ page }) => {
     await page.goto("/")
 
-    await expect(page).toHaveTitle(/LazyCodex.*Coming June 2026/i)
+    await expect(page).toHaveTitle(/LazyCodex.*Codex/i)
 
     const description = await page.locator('meta[name="description"]').getAttribute("content")
     expect(description).toBeTruthy()
     expect(description?.length).toBeGreaterThan(50)
     expect(description?.length).toBeLessThanOrEqual(170)
-    expect(description).toMatch(/OpenCode/i)
-    expect(description).toMatch(/June 2026/i)
+    expect(description).toMatch(/Codex/i)
+    expect(description).not.toMatch(LAUNCH_GATING_PATTERN)
 
     const canonical = await page.locator('link[rel="canonical"]').getAttribute("href")
     // Next.js metadataBase + canonical: "/" can resolve to either with or
@@ -35,7 +56,7 @@ test.describe("coming-soon page — SEO + metadata", () => {
     )
     await expect(page.locator('meta[property="og:description"]')).toHaveAttribute(
       "content",
-      /OpenCode/,
+      /Codex/,
     )
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute("content", "website")
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
@@ -96,5 +117,26 @@ test.describe("coming-soon page — SEO + metadata", () => {
     const tw = await request.get("/twitter-image")
     expect(tw.status()).toBe(200)
     expect(tw.headers()["content-type"]).toMatch(/image\/png/)
+  })
+
+  test("serves the unified LazyCodex favicon assets", async ({ page, request }) => {
+    await page.goto("/")
+
+    const iconHref = await page.locator('link[rel="icon"]').getAttribute("href")
+    expect(iconHref).toContain("/icon.svg")
+    expect(iconHref).not.toContain("/icon.png")
+
+    const svgIcon = await request.get("/icon.svg")
+    expect(svgIcon.status()).toBe(200)
+    expect(svgIcon.headers()["content-type"]).toMatch(/image\/svg\+xml/)
+    expect(await svgIcon.text()).toContain("LazyCodex boulder favicon")
+
+    const appleIconHref = await page.locator('link[rel="apple-touch-icon"]').getAttribute("href")
+    expect(appleIconHref).toContain("/apple-icon.png")
+
+    const appleIcon = await request.get("/apple-icon.png")
+    expect(appleIcon.status()).toBe(200)
+    expect(appleIcon.headers()["content-type"]).toMatch(/image\/png/)
+    expect(readPngDimensions(await appleIcon.body())).toEqual({ width: 180, height: 180 })
   })
 })

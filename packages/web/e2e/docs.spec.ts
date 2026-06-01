@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 import { DOC_SECTIONS } from "../lib/docs-sections"
 
 /**
@@ -32,7 +32,7 @@ test.describe("docs page — structure", () => {
     }
   })
 
-  test("nav lists all six section titles as links or buttons", async ({ page }) => {
+  test("nav lists every section title as links or buttons", async ({ page }) => {
     await page.goto("/docs")
     const nav = page.getByRole("navigation")
     for (const section of DOC_SECTIONS) {
@@ -45,17 +45,34 @@ test.describe("docs page — structure", () => {
 
   test("documents lazycodex-ai as the npm install alias", async ({ page }) => {
     await page.goto("/docs")
-    await expect(page.getByText("bunx lazycodex-ai install", { exact: false }).first()).toBeVisible()
+    await expect(page.getByText("npx lazycodex-ai install", { exact: false }).first()).toBeVisible()
     await expect(
       page
-        .getByText("bunx lazycodex-ai install --no-tui --codex-autonomous", { exact: false })
+        .getByText("npx lazycodex-ai install --no-tui --codex-autonomous", { exact: false })
         .first(),
     ).toBeVisible()
     await expect(
       page
-        .getByText("bunx --package oh-my-openagent omo install --platform=codex", { exact: false })
+        .getByText("npx --yes --package oh-my-openagent omo install --platform=codex", {
+          exact: false,
+        })
         .first(),
     ).toBeVisible()
+  })
+
+  test("documents skills and game-development usage", async ({ page }) => {
+    await page.goto("/docs")
+
+    const body = page.locator("body")
+    await expect(body).toContainText("Build games with LazyCodex")
+    await expect(body).toContainText("/init-deep")
+    await expect(body).toContainText("Skill-first workflows")
+    await expect(body).toContainText("review-work")
+    await expect(body).toContainText("remove-ai-slops")
+    await expect(body).toContainText("frontend-ui-ux")
+    await expect(body).toContainText("LSP")
+    await expect(body).toContainText("AST-grep")
+    await expect(body).toContainText("comment-checker")
   })
 })
 
