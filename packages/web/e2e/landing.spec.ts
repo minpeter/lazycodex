@@ -1,6 +1,6 @@
-import { test, expect } from "@playwright/test"
-import { SITE_CONFIG } from "../lib/site-config"
+import { expect, test } from "@playwright/test"
 import { COMMANDS } from "../lib/commands"
+import { SITE_CONFIG } from "../lib/site-config"
 
 /**
  * Landing `/` contract (TDD target state).
@@ -41,7 +41,7 @@ test.describe("landing page — install + commands", () => {
     await expect(
       page.getByText(SITE_CONFIG.installCommand, { exact: false }).first(),
     ).toBeVisible()
-    await expect(page.getByText("bunx lazycodex-ai install", { exact: false }).first()).toBeVisible()
+    await expect(page.getByText("npx lazycodex-ai install", { exact: false }).first()).toBeVisible()
     await expect(page.getByText(SITE_CONFIG.installEquivalent, { exact: false }).first()).toBeVisible()
     await expect(page.getByRole("button", { name: /copy/i }).first()).toBeVisible()
   })
@@ -53,6 +53,20 @@ test.describe("landing page — install + commands", () => {
       await expect(page.getByText(command.syntax, { exact: false }).first()).toBeVisible()
     }
   })
+
+  test("game-development guidance keeps the three command pillars first", async ({ page }) => {
+    await page.goto("/")
+
+    await expect(page.locator("article h2")).toHaveText(COMMANDS.map((command) => command.name))
+    await expect(page.getByText("Build games with LazyCodex", { exact: false })).toBeVisible()
+    await expect(page.getByText("/init-deep", { exact: false }).first()).toBeVisible()
+    await expect(
+      page
+        .getByText("Tools, data, launchers, editors, and build pipelines", { exact: false })
+        .first(),
+    ).toBeVisible()
+    await expect(page.getByText("Skill-first workflows", { exact: false }).first()).toBeVisible()
+  })
 })
 
 test.describe("landing page — links + footer", () => {
@@ -62,6 +76,14 @@ test.describe("landing page — links + footer", () => {
     await expect(stars).toBeVisible()
     await expect(stars).toContainText(/stars/i)
     await expect(stars).toContainText(/\d/)
+  })
+
+  test("updates the github stars pill from the live API", async ({ page }) => {
+    await page.goto("/")
+
+    const stars = page.locator(`a[href="${SITE_CONFIG.githubStarsUrl}"]`).first()
+    await expect(stars).toContainText(/^\d+(?:\.\d+[kM])?\sstars$/)
+    await expect(stars).toHaveAttribute("aria-label", /\d+(?:\.\d+[kM])?\sstars on GitHub/)
   })
 
   test("has a Docs link pointing at /docs", async ({ page }) => {

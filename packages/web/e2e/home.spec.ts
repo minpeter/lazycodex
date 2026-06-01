@@ -1,7 +1,19 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 import { SITE_CONFIG } from "../lib/site-config"
 
-test.describe("coming-soon page — content", () => {
+const LAUNCH_GATING_PATTERN = new RegExp(
+  [
+    ["coming", "soon"],
+    ["coming", "june"],
+    ["codex", "edition", "is", "coming"],
+    ["currently", "available", "for", "opencode"],
+  ]
+    .map((parts) => parts.join("\\s+"))
+    .join("|"),
+  "i",
+)
+
+test.describe("home page — content", () => {
   test("renders the wordmark, hero copy, and footer", async ({ page }) => {
     await page.goto("/")
 
@@ -21,6 +33,13 @@ test.describe("coming-soon page — content", () => {
     ).toBeVisible()
 
     await expect(page.getByText("lazycodex.ai", { exact: false }).first()).toBeVisible()
+  })
+
+  test("does not show launch gating copy", async ({ page }) => {
+    await page.goto("/")
+    const visibleText = await page.locator("body").innerText()
+
+    expect(visibleText).not.toMatch(LAUNCH_GATING_PATTERN)
   })
 
   test("has a single h1 and no broken landmarks", async ({ page }) => {

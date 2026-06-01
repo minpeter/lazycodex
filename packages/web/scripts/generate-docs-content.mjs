@@ -9,6 +9,7 @@ import { Marked } from "marked";
 const SECTIONS = [
   { id: "overview", file: "overview.md" },
   { id: "installation", file: "installation.md" },
+  { id: "skills", file: "skills.md" },
   { id: "ultrawork", file: "ultrawork.md" },
   { id: "ulw-loop", file: "ulw-loop.md" },
   { id: "ulw-plan", file: "ulw-plan.md" },

@@ -1,11 +1,12 @@
 import type { JSX } from "react"
-import { SiteHeader } from "../components/site/site-header"
+import { CommandCards } from "../components/site/command-cards"
+import { DocsCta } from "../components/site/docs-cta"
+import { GameDevSection } from "../components/site/game-dev-section"
 import { Hero } from "../components/site/hero"
 import { InstallBlock } from "../components/site/install-block"
-import { CommandCards } from "../components/site/command-cards"
-import { UltraworkSection } from "../components/site/ultrawork-section"
-import { DocsCta } from "../components/site/docs-cta"
 import { SiteFooter } from "../components/site/site-footer"
+import { SiteHeader } from "../components/site/site-header"
+import { UltraworkSection } from "../components/site/ultrawork-section"
 
 export default function LandingPage(): JSX.Element {
   return (
@@ -25,6 +26,7 @@ export default function LandingPage(): JSX.Element {
         </div>
         <InstallBlock />
         <CommandCards />
+        <GameDevSection />
         <UltraworkSection />
         <DocsCta />
       </main>

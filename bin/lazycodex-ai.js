@@ -7,15 +7,22 @@ const dryRun = args[0] === "--dry-run"
 const forwardedArgs = dryRun ? args.slice(1) : args
 const commandArgs =
   forwardedArgs[0] === "install"
-    ? ["--package", "@code-yeongyu/lazycodex", "lazycodex", "install", ...forwardedArgs.slice(1)]
-    : ["--package", "@code-yeongyu/lazycodex", "lazycodex", ...forwardedArgs]
+    ? [
+        "--yes",
+        "--package",
+        "@code-yeongyu/lazycodex",
+        "lazycodex",
+        "install",
+        ...forwardedArgs.slice(1),
+      ]
+    : ["--yes", "--package", "@code-yeongyu/lazycodex", "lazycodex", ...forwardedArgs]
 
 if (dryRun) {
-  console.log(["bunx", ...commandArgs].join(" "))
+  console.log(["npx", ...commandArgs].join(" "))
   process.exit(0)
 }
 
-const result = spawnSync("bunx", commandArgs, {
+const result = spawnSync("npx", commandArgs, {
   stdio: "inherit",
 })
 

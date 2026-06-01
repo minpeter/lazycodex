@@ -10,7 +10,7 @@ The reference implementation this document is distilled from: [`code-yeongyu/bub
 
 Bubbletea v1 manages cursor positioning in software ("virtual cursor"). It draws a `█` at the cursor position. The terminal's *real* cursor stays at `(0, 0)`.
 
-This breaks every CJK input method. IME candidate windows (the popup showing 가/각/간 for Korean Hangul composition, kana → kanji for Japanese, pinyin lookup for Chinese) anchor to the terminal's **real** cursor position. With v1, the candidate window appears at top-left while you are typing somewhere in the middle of the screen.
+This breaks every CJK input method. IME candidate windows (the popup showing composed Hangul syllables, kana to kanji conversion, or pinyin lookup) anchor to the terminal's **real** cursor position. With v1, the candidate window appears at top-left while you are typing somewhere in the middle of the screen.
 
 Bubbletea v2 fixes this with two changes:
 
@@ -143,7 +143,7 @@ for _, r := range s {
 }
 ```
 
-`lipgloss/v2` uses `go-runewidth` internally — `lipgloss.Width("안녕")` returns 4, not 2. **If you measure outside lipgloss, you must call runewidth directly.**
+`lipgloss/v2` uses `go-runewidth` internally — wide CJK text returns display-cell width, not rune count. **If you measure outside lipgloss, you must call runewidth directly.**
 
 ---
 
@@ -203,7 +203,7 @@ titleStyle := lipgloss.NewStyle().
     Border(lipgloss.RoundedBorder()).
     BorderForeground(lipgloss.Color("63"))
 
-rendered := titleStyle.Render("안녕하세요")
+rendered := titleStyle.Render("CJK title")
 ```
 
 `lipgloss/v2` width and padding correctly account for CJK display width. v1 did too — this is not a v2-specific fix, just a reminder.
@@ -297,18 +297,18 @@ internal/ui/
 ```go
 import "charm.land/bubbletea/v2/teatest"
 
-func TestModel_typing_korean_keeps_cursor_in_position(t *testing.T) {
+func TestModel_typing_wide_text_keeps_cursor_in_position(t *testing.T) {
     // Given
     m := initial()
     tm := teatest.NewTestModel(t, m, teatest.WithInitialTermSize(80, 24))
 
-    // When — simulate typing "안녕"
-    tm.Send(tea.KeyPressMsg{Code: '안'})
-    tm.Send(tea.KeyPressMsg{Code: '녕'})
+    // When — simulate typing two wide characters
+    tm.Send(tea.KeyPressMsg{Code: '好'})
+    tm.Send(tea.KeyPressMsg{Code: '字'})
 
     // Then
     out := tm.FinalOutput(t)
-    require.Contains(t, string(out), "안녕")
+    require.Contains(t, string(out), "好字")
     // Cursor should be at column 4 (two wide chars = 4 cells)
     // ...
 }
