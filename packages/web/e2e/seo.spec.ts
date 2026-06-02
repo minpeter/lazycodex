@@ -32,6 +32,8 @@ test.describe("site SEO + metadata", () => {
     expect(description?.length).toBeGreaterThan(50)
     expect(description?.length).toBeLessThanOrEqual(170)
     expect(description).toMatch(/Codex/i)
+    expect(description).toMatch(/agent harness/i)
+    expect(description).toMatch(/complex codebases/i)
     expect(description).not.toMatch(LAUNCH_GATING_PATTERN)
 
     const canonical = await page.locator('link[rel="canonical"]').getAttribute("href")
@@ -110,13 +112,24 @@ test.describe("site SEO + metadata", () => {
   })
 
   test("opengraph image and twitter image render as PNGs", async ({ request }) => {
+    // given
+    const expectedSize = { width: 1200, height: 630 }
+
+    // when
     const og = await request.get("/opengraph-image")
+
+    // then
     expect(og.status()).toBe(200)
     expect(og.headers()["content-type"]).toMatch(/image\/png/)
+    expect(readPngDimensions(await og.body())).toEqual(expectedSize)
 
+    // when
     const tw = await request.get("/twitter-image")
+
+    // then
     expect(tw.status()).toBe(200)
     expect(tw.headers()["content-type"]).toMatch(/image\/png/)
+    expect(readPngDimensions(await tw.body())).toEqual(expectedSize)
   })
 
   test("serves the unified LazyCodex favicon assets", async ({ page, request }) => {

@@ -8,42 +8,43 @@ export const SITE_CONFIG = {
   sisyphusUrl: "https://sisyphuslabs.ai",
   siteUrl: "https://lazycodex.ai",
   docsPath: "/docs",
-  eyebrow: "CODEX FOR NO-BRAINERS",
+  eyebrow: "AGENT HARNESS FOR COMPLEX CODEBASES",
   wordmark: "LazyCodex",
-  heroLineA: "You don't need to ultrathink.",
+  heroLineA: "The one and only agent harness for complex codebases.",
   heroLineB: {
-    prefix: "Just prompt ",
-    slot: "{your prompt}",
-    suffix: " ",
-    keyword: "ultrawork",
+    prefix: "Project memory, ",
+    slot: "planning,",
+    suffix: " execution, and ",
+    keyword: "verified completion",
     period: ".",
   },
-  ultraworkTagline: "One word. Every agent activates. Doesn't stop until done.",
+  harnessPillars: ["project memory", "planning", "parallel agents", "verified completion"],
+  ultraworkTagline: "ultrawork turns the harness into a verified run.",
   ultraworkExample: "ulw add authentication",
-  gameDev: {
-    kicker: "Field notes for large repos",
-    title: "Build games with LazyCodex",
+  featureWorkflows: {
+    kicker: "What LazyCodex wires into Codex",
+    title: "Harness the whole codebase",
     intro:
-      "Game projects rarely fit a clean folder story. LazyCodex gives agents landmarks before they touch gameplay, tools, data, launchers, editors, and build pipelines.",
+      "LazyCodex installs OmO as a serious agent harness for complex repositories: project memory, planning, execution, skills, hooks, model routing, and verification defaults in one pass.",
     points: [
       {
-        label: "/init-deep is the map",
-        text: "Generate hierarchical AGENTS.md context when a repo is too large, old, or cross-cutting to explain from memory.",
+        label: "Context that survives",
+        text: "/init-deep generates hierarchical AGENTS.md context so agents start from local guidance before touching a large repository.",
       },
       {
-        label: "The MVP is not the product",
-        text: "Keep the surrounding apps in scope: Tools, data, launchers, editors, and build pipelines are often where production risk lives.",
+        label: "Plans before edits",
+        text: "$ulw-plan turns ambiguous work into a decision-complete plan, then $start-work executes it with durable Boulder progress.",
       },
       {
-        label: "Rerun it at milestones",
-        text: "Rerun it when the milestone changes so the project memory keeps matching the actual shape of the game.",
+        label: "Evidence at the end",
+        text: "$ulw-loop keeps complex work moving until the completion promise is backed by verification, not a hopeful status update.",
       },
     ],
   },
-  skillWorkflow: {
-    title: "Skill-first workflows",
+  builtInSkills: {
+    title: "Built-in skill coverage",
     summary:
-      "The three command pillars stay up front. Skills add the specialist guidance for review, cleanup, UI, language discipline, LSP, AST-grep, rules, and comment-checker feedback.",
+      "Skills give the harness specialist judgment for review, cleanup, UI, strict language work, LSP diagnostics, AST-grep rewrites, project rules, and comment-checker feedback.",
     skills: ["review-work", "remove-ai-slops", "frontend-ui-ux", "programming", "LSP", "AST-grep", "rules", "comment-checker"],
   },
 } as const;

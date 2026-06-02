@@ -1,6 +1,6 @@
 {
   "name": "lazycodex-ai",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Codex install alias for oh-my-openagent. Run `npx lazycodex-ai install` to set up the Codex platform.",
   "type": "module",
   "bin": {

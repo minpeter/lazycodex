@@ -6,7 +6,10 @@ import { describe, it } from "node:test"
 
 const root = new URL("..", import.meta.url).pathname
 const packageJsonPath = join(root, "package.json")
+const packageLockPath = join(root, "package-lock.json")
+const publishWorkflowPath = join(root, ".github", "workflows", "npm-publish.yml")
 const binPath = join(root, "bin", "lazycodex-ai.js")
+const releaseVersion = "0.2.2"
 
 describe("lazycodex-ai npm package", () => {
   it("maps the package name and bin to lazycodex-ai", () => {
@@ -18,9 +21,27 @@ describe("lazycodex-ai npm package", () => {
 
     // then
     assert.equal(manifest.name, "lazycodex-ai")
-    assert.equal(manifest.version, "0.2.1")
+    assert.equal(manifest.version, releaseVersion)
     assert.equal(manifest.bin?.["lazycodex-ai"], "bin/lazycodex-ai.js")
     assert.equal(manifest.private, undefined)
+  })
+
+  it("keeps publish metadata aligned with the release version", () => {
+    // given
+    assert.equal(existsSync(packageJsonPath), true, "root package.json must exist")
+    assert.equal(existsSync(packageLockPath), true, "package-lock.json must exist")
+    assert.equal(existsSync(publishWorkflowPath), true, "npm publish workflow must exist")
+
+    // when
+    const manifest = JSON.parse(readFileSync(packageJsonPath, "utf8"))
+    const lockfile = JSON.parse(readFileSync(packageLockPath, "utf8"))
+    const publishWorkflow = readFileSync(publishWorkflowPath, "utf8")
+
+    // then
+    assert.equal(manifest.version, releaseVersion)
+    assert.equal(lockfile.version, releaseVersion)
+    assert.equal(lockfile.packages?.[""]?.version, releaseVersion)
+    assert.match(publishWorkflow, new RegExp(`default: "${releaseVersion}"`))
   })
 
   it("dry-runs install through oh-my-openagent with the Codex platform default", () => {

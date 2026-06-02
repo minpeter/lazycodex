@@ -7,7 +7,7 @@ import { SITE_CONFIG } from "../lib/site-config"
  *
  * Selectors are deliberately tolerant of inline <span> splits: headings,
  * links, and buttons go through getByRole; the hero tagline is checked by
- * its distinctive sub-parts ("{your prompt}" + "ultrawork") instead of one
+ * its distinctive sub-parts ("planning" + "verified completion") instead of one
  * exact full-string match; `.first()` guards against strict-mode violations.
  */
 
@@ -25,7 +25,9 @@ test.describe("landing page — hero", () => {
     await expect(page.getByText(SITE_CONFIG.eyebrow, { exact: true })).toBeVisible()
     await expect(page.getByText(SITE_CONFIG.heroLineA, { exact: false }).first()).toBeVisible()
     // Tagline may be split across inline spans — assert the distinctive parts.
-    await expect(page.getByText("Just prompt", { exact: false }).first()).toBeVisible()
+    await expect(
+      page.getByText(SITE_CONFIG.heroLineB.prefix, { exact: false }).first(),
+    ).toBeVisible()
     await expect(
       page.getByText(SITE_CONFIG.heroLineB.slot, { exact: false }).first(),
     ).toBeVisible()
@@ -54,18 +56,15 @@ test.describe("landing page — install + commands", () => {
     }
   })
 
-  test("game-development guidance keeps the three command pillars first", async ({ page }) => {
+  test("feature workflow guidance keeps the three command pillars first", async ({ page }) => {
     await page.goto("/")
 
     await expect(page.locator("article h2")).toHaveText(COMMANDS.map((command) => command.name))
-    await expect(page.getByText("Build games with LazyCodex", { exact: false })).toBeVisible()
-    await expect(page.getByText("/init-deep", { exact: false }).first()).toBeVisible()
-    await expect(
-      page
-        .getByText("Tools, data, launchers, editors, and build pipelines", { exact: false })
-        .first(),
-    ).toBeVisible()
-    await expect(page.getByText("Skill-first workflows", { exact: false }).first()).toBeVisible()
+    await expect(page.getByText("Harness the whole codebase", { exact: false })).toBeVisible()
+    await expect(page.getByText("Context that survives", { exact: false }).first()).toBeVisible()
+    await expect(page.getByText("Plans before edits", { exact: false }).first()).toBeVisible()
+    await expect(page.getByText("Evidence at the end", { exact: false }).first()).toBeVisible()
+    await expect(page.getByText("Built-in skill coverage", { exact: false }).first()).toBeVisible()
   })
 })
 
